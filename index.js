@@ -37,16 +37,22 @@ function setup() {
     graph[E.y][E.x] = END
     draw(graph)
     listener(graph)
-
-    BreadthFirst.shortest(graph)
 }
 
 function listener(graph) {
+    BreadthFirst.shortest(graph)
+
     var down = false
     var erase = false
     var x, y;
-    document.addEventListener('mouseup', () => down = false)
+    document.addEventListener('mouseup', () => {
+        BreadthFirst.shortest(graph)
+
+        down = false
+    })
     document.addEventListener('mousedown', e => {
+        BreadthFirst.breakRun()
+
         down = true
         x = mouse(e).x
         y = mouse(e).y
@@ -68,8 +74,6 @@ function edit(graph, x, y, type) {
     if (graph[y][x] == START || graph[y][x] == END) return
     graph[y][x] = type
     draw(graph)
-
-    BreadthFirst.shortest(graph)
 }
 
 function mouse(e) {

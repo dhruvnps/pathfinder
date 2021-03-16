@@ -1,22 +1,20 @@
 class BreadthFirst {
 
-    static running = false
+    static break = false
     static timer = ms => new Promise(res => setTimeout(res, ms))
 
     static async bfs(start, graph, delay) {
-        this.running = !this.running
-
         var queue = [start]
         var visited = { start: true }
         var path = {}
 
         while (queue.length > 0) {
-            await this.timer(delay)
-            if (!this.running) {
+            if (this.break) {
+                this.break = false
                 draw(graph)
-                this.running = true
-                return
+                return;
             }
+            await this.timer(delay)
 
             var node = queue.shift()
             if (node != start) block(node[0], node[1], SCAN)
@@ -34,14 +32,12 @@ class BreadthFirst {
                             visited[n] = true
                             queue.push(n)
                         } else if (type == END) {
-                            this.running = false
                             return [path, n]
                         }
                     }
                 }
             }
         }
-        this.running = false
     }
 
     static async shortest(graph, delay = 5) {
@@ -56,5 +52,9 @@ class BreadthFirst {
                 block(node[0], node[1], PATH)
             }
         }
+    }
+
+    static breakRun() {
+        this.break = true;
     }
 }
