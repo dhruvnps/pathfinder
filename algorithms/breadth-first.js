@@ -38,6 +38,7 @@ class BreadthFirst {
                 }
             }
         }
+        this.break = false
     }
 
     static async shortest(graph, delay = 5) {
