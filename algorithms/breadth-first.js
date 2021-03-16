@@ -5,18 +5,14 @@ class BreadthFirst {
 
     static async bfs(start, graph, delay) {
         await this.timer(delay)
-        this.break = false
 
         var queue = [start]
         var visited = { start: true }
         var path = {}
 
-        while (queue.length > 0) {
-            if (this.break) {
-                this.break = false
-                draw(graph)
-                return
-            }
+        this.break = false
+        while (!this.break) {
+            if (queue.length == 0) return
             await this.timer(delay)
 
             var node = queue.shift()
@@ -41,6 +37,8 @@ class BreadthFirst {
                 }
             }
         }
+        this.break = false
+        draw(graph)
     }
 
     static breakRun() {
@@ -52,12 +50,14 @@ class BreadthFirst {
         var ret = await this.bfs(start, graph, delay)
         if (ret) {
             var [path, node] = ret
-            while (true) {
+            while (!this.break) {
                 await this.timer(delay * 2)
                 var node = path[node]
-                if (node[0] == start[0] && node[1] == start[1]) break
+                if (node[0] == start[0] && node[1] == start[1]) return
                 block(node[0], node[1], PATH)
             }
+            this.break = false
+            draw(graph)
         }
     }
 }
