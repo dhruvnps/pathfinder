@@ -41,6 +41,10 @@ class BreadthFirst {
         }
     }
 
+    static breakRun() {
+        this.break = true;
+    }
+
     static async shortest(graph, delay = 5) {
         var start = [S.x, S.y]
         var ret = await this.bfs(start, graph, delay)
@@ -53,9 +57,5 @@ class BreadthFirst {
                 block(node[0], node[1], PATH)
             }
         }
-    }
-
-    static breakRun() {
-        this.break = true;
     }
 }
