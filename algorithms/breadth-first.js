@@ -4,6 +4,7 @@ class BreadthFirst {
     static timer = ms => new Promise(res => setTimeout(res, ms))
 
     static async bfs(start, graph, delay) {
+        this.break = false;
         var queue = [start]
         var visited = { start: true }
         var path = {}
@@ -38,7 +39,6 @@ class BreadthFirst {
                 }
             }
         }
-        this.break = false
     }
 
     static async shortest(graph, delay = 5) {
