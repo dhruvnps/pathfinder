@@ -40,6 +40,8 @@ function setup() {
 }
 
 function listener(graph) {
+    BreadthFirst.shortest(graph)
+
     var down = false
     var erase = false
     var x, y;
