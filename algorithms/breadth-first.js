@@ -3,33 +3,36 @@ class BreadthFirst {
     static break = false
     static timer = ms => new Promise(res => setTimeout(res, ms))
 
-    static async bfs(start, graph, delay) {
-        await this.timer(delay)
-
-        var queue = [start]
-        var visited = { start: true }
-        var path = {}
-
+    static async bfs(start, graph) {
         this.break = false
-        while (!this.break) {
-            if (queue.length == 0) return
-            await this.timer(delay)
 
+        var queue = [start],
+            visited = { start: true },
+            path = {}
+
+        while (queue.length > 0) {
             var node = queue.shift()
-            if (node != start) block(node[0], node[1], SCAN)
+            if (node != start) block(node[0], node[1], VISUAL.done)
 
             for (var idx = 0; idx < DELTAS.length; idx++) {
-                var [dx, dy] = DELTAS[idx]
-                var n = [node[0] + dx, node[1] + dy]
+                if (this.break) return
+                await this.timer(DELAY.search)
 
-                if (0 <= n[0] && n[0] < SIZE_X &&
-                    0 <= n[1] && n[1] < SIZE_Y) {
+                var [dx, dy] = DELTAS[idx],
+                    n = [node[0] + dx, node[1] + dy]
+
+                if (0 <= n[0] && n[0] < graph[0].length &&
+                    0 <= n[1] && n[1] < graph.length) {
                     var type = graph[n[1]][n[0]]
                     if (!(n.toString() in visited)) {
+
                         path[n] = node
+
                         if (type == EMPTY) {
                             visited[n] = true
                             queue.push(n)
+                            block(n[0], n[1], VISUAL.edge)
+
                         } else if (type == END) {
                             return [path, n]
                         }
@@ -37,27 +40,23 @@ class BreadthFirst {
                 }
             }
         }
-        this.break = false
-        draw(graph)
     }
 
     static breakRun() {
         this.break = true
     }
 
-    static async shortest(graph, delay = 5) {
-        var start = [S.x, S.y]
-        var ret = await this.bfs(start, graph, delay)
+    static async shortest(graph, start_x, start_y) {
+        await this.timer(Math.max(DELAY.search, DELAY.path))
+        var ret = await this.bfs([start_x, start_y], graph)
         if (ret) {
             var [path, node] = ret
             while (!this.break) {
-                await this.timer(delay * 2)
+                await this.timer(DELAY.path)
                 var node = path[node]
-                if (node[0] == start[0] && node[1] == start[1]) return
-                block(node[0], node[1], PATH)
+                if (node[0] == start_x && node[1] == start_y) return
+                block(node[0], node[1], VISUAL.path)
             }
-            this.break = false
-            draw(graph)
-        }
+        } draw(graph)
     }
 }

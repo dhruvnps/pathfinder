@@ -1,57 +1,56 @@
-canvas = document.getElementById('canvas')
-ctx = canvas.getContext('2d')
+const canvas = document.getElementById('canvas')
+const ctx = canvas.getContext('2d')
+
+var algorithm
+
+algorithm = !true ? BreadthFirst : AStar
 
 EMPTY = 0, WALL = 1, START = 2, END = 3
-
-COLORS = {
-    [EMPTY]: '#e0e0e0',
-    [START]: 'blue',
-    [END]: 'green',
-    [WALL]: 'black',
-}
-
-PATH = 'red'
-SCAN = 'lightblue'
-
-SIZE_X = 30
-SIZE_Y = 20
-
-S = { x: 5, y: 10 }
-E = { x: 24, y: 10 }
-
-UNIT = 30
-GAP = 1
-
-SCALE_X = SIZE_X * UNIT
-SCALE_Y = SIZE_Y * UNIT
-
 DELTAS = [[0, 1], [1, 0], [0, -1], [-1, 0]]
 
-setup()
+DELAY = { search: 4, path: 10 }
+VISUAL = {
+    path: 'red',
+    done: 'lightblue',
+    edge: 'lightgrey',
+}
 
-function setup() {
-    canvas.width = SCALE_X
-    canvas.height = SCALE_Y
-    var graph = Array(SIZE_Y).fill().map(() => Array(SIZE_X).fill(EMPTY))
-    graph[S.y][S.x] = START
-    graph[E.y][E.x] = END
+const
+    size = { x: 30, y: 20 },
+    unit = 30,
+    gap = 1,
+    start = { x: 5, y: 10 },
+    end = { x: 24, y: 10 },
+    graph_colors = {
+        [EMPTY]: '#dfdfdf',
+        [START]: 'blue',
+        [END]: 'green',
+        [WALL]: 'black',
+    }
+
+window.onload = function () {
+    canvas.width = size.x * unit
+    canvas.height = size.y * unit
+    var graph = Array(size.y).fill().map(() => Array(size.x).fill(EMPTY))
+    graph[start.y][start.x] = START
+    graph[end.y][end.x] = END
     draw(graph)
     listener(graph)
 }
 
 function listener(graph) {
-    BreadthFirst.shortest(graph)
+    algorithm.shortest(graph, start.x, start.y, end.x, end.y)
 
-    var down = false
-    var erase = false
-    var x, y;
+    var down = false,
+        erase = false,
+        x, y;
     document.addEventListener('mouseup', () => {
-        BreadthFirst.shortest(graph)
+        algorithm.shortest(graph, start.x, start.y, end.x, end.y)
 
         down = false
     })
     document.addEventListener('mousedown', e => {
-        BreadthFirst.breakRun()
+        algorithm.breakRun()
 
         down = true
         x = mouse(e).x
@@ -78,20 +77,20 @@ function edit(graph, x, y, type) {
 
 function mouse(e) {
     rect = canvas.getBoundingClientRect()
-    x = Math.floor((e.clientX - rect.left) / UNIT)
-    y = Math.floor((e.clientY - rect.top) / UNIT)
+    x = Math.floor((e.clientX - rect.left) / unit)
+    y = Math.floor((e.clientY - rect.top) / unit)
     return { x: x, y: y }
 }
 
 function draw(graph) {
-    for (var y = 0; y < SIZE_Y; y++) {
-        for (var x = 0; x < SIZE_X; x++) {
-            block(x, y, COLORS[graph[y][x]])
+    for (var y = 0; y < size.y; y++) {
+        for (var x = 0; x < size.x; x++) {
+            block(x, y, graph_colors[graph[y][x]])
         }
     }
 }
 
 function block(x, y, color) {
     ctx.fillStyle = color
-    ctx.fillRect(x * UNIT, y * UNIT, UNIT - GAP, UNIT - GAP)
+    ctx.fillRect(x * unit, y * unit, unit - gap, unit - gap)
 }
