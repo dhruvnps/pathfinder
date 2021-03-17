@@ -40,7 +40,7 @@ class AStar {
                     0 <= n[1] && n[1] < graph.length) {
                     var type = graph[n[1]][n[0]]
                     if (!(n.toString() in visited) &&
-                        type == EMPTY || type == END) {
+                        (type == EMPTY || type == END)) {
 
                         var ng = gScore[node] + 1
                         if (!(n.toString() in gScore) ||

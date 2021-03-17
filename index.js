@@ -44,12 +44,12 @@ function listener(graph) {
     var down = false,
         erase = false,
         x, y;
-    document.addEventListener('mouseup', () => {
+    canvas.addEventListener('mouseup', () => {
         algorithm.shortest(graph, start.x, start.y, end.x, end.y)
 
         down = false
     })
-    document.addEventListener('mousedown', e => {
+    canvas.addEventListener('mousedown', e => {
         algorithm.breakRun()
 
         down = true
@@ -58,7 +58,7 @@ function listener(graph) {
         erase = graph[y][x] == WALL
         edit(graph, x, y, erase ? EMPTY : WALL)
     })
-    document.addEventListener('mousemove', e => {
+    canvas.addEventListener('mousemove', e => {
         if (x != null && y != null && down) {
             if (mouse(e).x != x || mouse(e).y != y) {
                 x = mouse(e).x
