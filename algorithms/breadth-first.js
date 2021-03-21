@@ -1,6 +1,6 @@
 class BreadthFirst {
 
-    shortest(graph) {
+    path(graph) {
         var start = graph.start,
             end = graph.end
 

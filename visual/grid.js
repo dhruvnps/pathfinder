@@ -17,10 +17,11 @@ class Grid {
             .selectAll()
             .data(d => d)
             .enter().append('rect')
-            .attr('width', this.unit - 1)
-            .attr('height', this.unit - 1)
+            .attr('width', this.unit)
+            .attr('height', this.unit)
             .attr('x', d => d.x * this.unit)
             .attr('y', d => d.y * this.unit)
+            .style('stroke', 'white')
 
         this.listener()
         this.reset()

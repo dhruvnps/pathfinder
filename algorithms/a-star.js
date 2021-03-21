@@ -4,7 +4,7 @@ class AStar {
         this.heuristic = heuristic
     }
 
-    shortest(graph) {
+    path(graph) {
         var heap = new Heap((a, b) => a.f - b.f)
 
         var start = graph.start,

@@ -16,7 +16,7 @@ class Visual {
     static run() {
         var finder = new AStar(Heuristic.manhattan)
         this.graph.reset()
-        this.path(finder.shortest(this.graph))
+        this.path(finder.path(this.graph))
         this.runstack()
     }
 
