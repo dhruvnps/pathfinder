@@ -32,6 +32,7 @@ class Grid {
             node
         this.svg.on('mouseup', () => {
             down = false
+            this.reset()
             Visual.run()
         })
         this.svg.on('mousedown', e => {
@@ -41,6 +42,7 @@ class Grid {
             this.graph.insert(erase
                 ? new Node(node.x, node.y)
                 : new Wall(node.x, node.y))
+            Visual.stop()
             this.reset()
         })
         this.svg.on('mousemove', e => {
@@ -51,6 +53,7 @@ class Grid {
                     this.graph.insert(erase
                         ? new Node(node.x, node.y)
                         : new Wall(node.x, node.y))
+                    Visual.stop()
                     this.reset()
                 }
             }
@@ -81,8 +84,6 @@ class Grid {
     }
 
     reset() {
-        Visual.stop()
-
         this.svg
             .selectAll('g')
             .data(this.graph.graph)
