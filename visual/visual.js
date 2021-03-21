@@ -15,10 +15,17 @@ class Visual {
 
     static run() {
         var finder = new AStar(Heuristic.manhattan)
-
         this.graph.reset()
         this.path(finder.shortest(this.graph))
         this.runstack()
+    }
+
+    static draw(x, y, erase, weight = 1) {
+        this.stop()
+        this.graph.insert(erase
+            ? new Node(x, y, weight)
+            : new Wall(x, y))
+        this.grid.reset()
     }
 
     static path(nodes) {

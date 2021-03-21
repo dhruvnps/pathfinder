@@ -27,37 +27,26 @@ class Grid {
     }
 
     listener() {
-        var down = false,
-            erase = false,
-            node
-        this.svg.on('mouseup', () => {
-            down = false
-            this.reset()
-            Visual.run()
-        })
-        this.svg.on('mousedown', e => {
-            down = true
-            node = e.path[0].__data__
-            erase = node.wall
-            this.graph.insert(erase
-                ? new Node(node.x, node.y)
-                : new Wall(node.x, node.y))
-            Visual.stop()
-            this.reset()
-        })
-        this.svg.on('mousemove', e => {
-            if (down) {
-                var next = e.path[0].__data__
-                if (node && next && !node.equals(next)) {
-                    node = next
-                    this.graph.insert(erase
-                        ? new Node(node.x, node.y)
-                        : new Wall(node.x, node.y))
-                    Visual.stop()
-                    this.reset()
+        var erase, node
+        this.grid
+            .on('mouseup', function () {
+                node = null
+                Visual.run()
+            })
+            .on('mousedown', function () {
+                node = d3.select(this).datum()
+                erase = node.wall
+                Visual.draw(node.x, node.y, erase)
+            })
+            .on('mousemove', function () {
+                if (node) {
+                    var next = d3.select(this).datum()
+                    if (next && !node.equals(next)) {
+                        node = next
+                        Visual.draw(node.x, node.y, erase)
+                    }
                 }
-            }
-        })
+            })
     }
 
     getBlock(node) {
