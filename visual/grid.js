@@ -1,10 +1,10 @@
 class Grid {
 
-    constructor(graph, unit, parent) {
+    constructor(graph, unit, container) {
         this.graph = graph
         this.unit = unit
 
-        this.svg = parent
+        this.svg = container
             .append('svg')
 
         this.grid = this.svg

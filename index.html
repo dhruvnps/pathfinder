@@ -2,16 +2,49 @@
 <html lang="en">
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+    * {
+        font-family: Montserrat;
+    }
+
     html {
-        height: 100%;
-        width: 100%;
+        height: 100vh;
+        width: 100vw;
     }
 
     body {
-        height: 100%;
-        width: 100%;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
         padding: 0;
         margin: 0;
+    }
+
+    header {
+        background-color: white;
+        height: 8vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: row;
+    }
+
+    button {
+        margin: 1.5vh;
+        padding: 0 15px;
+        border: none;
+        border-radius: 10px;
+        outline: none;
+        background-color: transparent;
+    }
+
+    .active {
+        background-color: #dfdfdf;
+    }
+
+    .grid {
+        height: 92vh;
+        width: 100vw;
     }
 </style>
 
@@ -22,6 +55,15 @@
 </head>
 
 <body>
+    <header>
+        <button onclick="astar(this)" class="active">A*</button>
+        <button onclick="dijikstra(this)">Dijikstra</button>
+        <button onclick="breadthfirst(this)">Breadth First</button>
+        <button onclick="bestfirst(this)">Best First</button>
+    </header>
+
+    <div class="grid"></div>
+
     <script src="modules/heap.js"></script>
     <script src="modules/d3.js"></script>
 

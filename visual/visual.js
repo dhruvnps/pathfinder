@@ -1,12 +1,12 @@
 class Visual {
 
-    static init(parent) {
+    static init(container) {
+        var unit = 40
+
         this.callstack = []
         this.timeouts = []
 
-        var unit = 40
-
-        var box = parent.node().getBoundingClientRect(),
+        var box = container.node().getBoundingClientRect(),
             height = Math.ceil(box.height / unit),
             width = Math.ceil(box.width / unit),
             mid = {
@@ -21,15 +21,21 @@ class Visual {
             new Node(width - mid.x - 1, mid.y),
         )
 
-        this.grid = new Grid(this.graph, unit, parent)
+        this.grid = new Grid(this.graph, unit, container)
 
+        this.find(new AStar(Heuristic.manhattan))
+    }
+
+    static find(finder) {
+        this.finder = finder
         this.run()
     }
 
     static run() {
-        var finder = new AStar(Heuristic.manhattan)
+        this.stop()
         this.graph.reset()
-        this.path(finder.path(this.graph))
+        this.grid.reset()
+        this.path(this.finder.path(this.graph))
         this.runstack()
     }
 
