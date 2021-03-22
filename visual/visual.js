@@ -1,14 +1,27 @@
 class Visual {
 
-    static init() {
+    static init(parent) {
         this.callstack = []
         this.timeouts = []
 
-        var start = new Node(5, 10)
-        var end = new Node(24, 10)
-        this.graph = new Graph(30, 20, start, end)
+        var unit = 40
 
-        this.grid = new Grid(this.graph, 30)
+        var box = parent.node().getBoundingClientRect(),
+            height = Math.ceil(box.height / unit),
+            width = Math.ceil(box.width / unit),
+            mid = {
+                x: Math.ceil(width / 4) - 1,
+                y: Math.ceil(height / 2) - 1
+            }
+
+        this.graph = new Graph(
+            width,
+            height,
+            new Node(mid.x, mid.y),
+            new Node(width - mid.x - 1, mid.y),
+        )
+
+        this.grid = new Grid(this.graph, unit, parent)
 
         this.run()
     }
