@@ -22,11 +22,23 @@
     }
 
     header {
+        display: flex;
+        flex-direction: row;
         background-color: white;
+    }
+
+    header .left {
         height: 8vh;
         width: 100vw;
         display: flex;
         flex-direction: row;
+    }
+
+    header .right {
+        height: 8vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: row-reverse;
     }
 
     button {
@@ -38,13 +50,33 @@
         background-color: transparent;
     }
 
-    .active {
+    .left .active {
         background-color: #dfdfdf;
+    }
+
+    .right .active {
+        background-color: purple;
+        color: white;
     }
 
     .grid {
         height: 92vh;
         width: 100vw;
+    }
+
+    .tooltip span {
+        text-align: left;
+    }
+
+    #cost {
+        opacity: 0;
+        transition: 0.2s;
+        background-color: lightgrey;
+        color: black;
+    }
+
+    #weight:hover+#cost {
+        opacity: 0.5;
     }
 </style>
 
@@ -56,10 +88,16 @@
 
 <body>
     <header>
-        <button onclick="astar(this)" class="active">A*</button>
-        <button onclick="dijikstra(this)">Dijikstra</button>
-        <button onclick="breadthfirst(this)">Breadth First</button>
-        <button onclick="bestfirst(this)">Best First</button>
+        <div class="left">
+            <button onclick="astar(this)" class="active">A*</button>
+            <button onclick="dijikstra(this)">Dijikstra</button>
+            <button onclick="breadthfirst(this)">Breadth First</button>
+            <button onclick="bestfirst(this)">Best First</button>
+        </div>
+        <div class="right">
+            <button onclick="weight(this)" id="weight">Weight</button>
+            <button id="cost">10× Cost</button>
+        </div>
     </header>
 
     <div class="grid"></div>

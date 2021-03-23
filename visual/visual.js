@@ -22,12 +22,20 @@ class Visual {
         )
 
         this.grid = new Grid(this.graph, unit, container)
-
         this.find(new AStar(Heuristic.manhattan))
+    }
+
+    static set weight(value) {
+        this.grid.weight = value
+    }
+
+    static get weight() {
+        return this.grid.weight
     }
 
     static find(finder) {
         this.finder = finder
+        this.grid.weighted = finder.weighted
         this.run()
     }
 
@@ -39,11 +47,13 @@ class Visual {
         this.runstack()
     }
 
-    static draw(x, y, erase, weight = 1) {
+    static draw(node, erase, weight = 1) {
         this.stop()
         this.graph.insert(erase
-            ? new Node(x, y, weight)
-            : new Wall(x, y))
+            ? new Node(node.x, node.y)
+            : weight > 1
+                ? new Node(node.x, node.y, weight)
+                : new Wall(node.x, node.y))
         this.grid.reset()
     }
 

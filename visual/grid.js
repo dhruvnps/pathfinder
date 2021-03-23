@@ -16,6 +16,7 @@ class Grid {
             .selectAll()
             .data(d => d)
             .enter().append('rect')
+            .attr('class', 'block')
             .attr('width', this.unit)
             .attr('height', this.unit)
             .attr('x', d => d.x * this.unit)
@@ -27,25 +28,19 @@ class Grid {
     }
 
     listener() {
-        var erase, node
+        var erase, node, self = this
         this.grid
             .on('mouseup', function () {
                 node = null
                 Visual.run()
             })
-            .on('mousedown', function () {
-                node = d3.select(this).datum()
-                erase = node.wall
-                Visual.draw(node.x, node.y, erase)
+            .on('mousedown', function ({ }, d) {
+                erase = d.wall || d.weight > 1
+                Visual.draw(node = d, erase, self.weight)
             })
-            .on('mousemove', function () {
-                if (node) {
-                    var next = d3.select(this).datum()
-                    if (next && !node.equals(next)) {
-                        node = next
-                        Visual.draw(node.x, node.y, erase)
-                    }
-                }
+            .on('mousemove', function ({ }, d) {
+                if (node && d && !node.equals(d))
+                    Visual.draw(node = d, erase, self.weight)
             })
     }
 
@@ -53,11 +48,14 @@ class Grid {
         return d3.select(this.grid._groups[node.y][node.x])
     }
 
-    colorize(node, color) {
+    colorize(node, color, isPath) {
         if (!node.equals(this.graph.start)
-            && !node.equals(this.graph.end))
+            && !node.equals(this.graph.end)
+            && (node.weight == 1
+                || (isPath && !this.weighted)))
             this.getBlock(node)
                 .style('fill', color)
+                .style('opacity', 1)
     }
 
     open(node) {
@@ -69,21 +67,26 @@ class Grid {
     }
 
     path(node) {
-        this.colorize(node, 'red')
+        this.colorize(node, 'red', true)
     }
 
     reset() {
         this.svg
             .selectAll('g')
             .data(this.graph.graph)
-            .selectAll('rect')
+            .selectAll('.block')
             .data(d => d)
 
         this.grid
             .style('fill', d => d.wall ? 'black'
                 : d.equals(this.graph.start) ? 'blue'
                     : d.equals(this.graph.end) ? 'green'
-                        : '#dfdfdf')
+                        : d.weight > 1 ? 'purple'
+                            : '#dfdfdf')
+
+            .style('opacity', d =>
+                d.weight > 1 && !this.weighted
+                    ? 0.4 : 1)
     }
 
 }

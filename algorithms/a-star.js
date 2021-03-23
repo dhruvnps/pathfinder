@@ -1,5 +1,7 @@
 class AStar {
 
+    weighted = true
+
     constructor(heuristic) {
         this.heuristic = heuristic
     }
