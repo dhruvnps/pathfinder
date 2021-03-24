@@ -6,9 +6,9 @@ function astar(btn) {
     Visual.find(new AStar(Heuristic.manhattan))
 }
 
-function dijikstra(btn) {
+function dijkstra(btn) {
     setActive(btn)
-    Visual.find(new Dijikstra())
+    Visual.find(new Dijkstra())
 }
 
 function breadthfirst(btn) {

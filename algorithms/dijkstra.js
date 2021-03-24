@@ -1,4 +1,4 @@
-class Dijikstra extends AStar {
+class Dijkstra extends AStar {
 
     constructor() {
         super(() => 0)
