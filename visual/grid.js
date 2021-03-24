@@ -8,8 +8,8 @@ class Grid {
             .append('svg')
 
         this.grid = this.svg
-            .attr('width', '100vw')
-            .attr('height', '100vh')
+            .attr('width', '100%')
+            .attr('height', '100%')
             .selectAll()
             .data(this.graph.graph)
             .enter().append('g')
