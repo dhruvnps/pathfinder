@@ -48,11 +48,13 @@ class Visual {
         var path = this.finder.path(this.graph)
         var t1 = performance.now()
 
-        var operations = this.callstack.length,
-            length = path.length
+        if (path) {
+            var operations = this.callstack.length,
+                length = path.length
+            this.stats.values(t1 - t0, operations, length)
+            this.path(path)
+        }
 
-        this.stats.values(t1 - t0, operations, length)
-        this.path(path)
         this.runstack()
     }
 
@@ -66,7 +68,6 @@ class Visual {
     }
 
     static path(nodes) {
-        if (!nodes) return
         for (let node of nodes.slice(1, -1)) {
             this.callstack.push(() => this.grid.path(node))
         }
