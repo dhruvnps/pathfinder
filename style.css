@@ -38,6 +38,7 @@ header .right {
 }
 
 button {
+    transition: 0.2s;
     margin: 1.5vh;
     padding: 0 15px;
     border: none;
@@ -46,13 +47,12 @@ button {
     background-color: transparent;
 }
 
-.left .active {
+.left :not(.active):hover {
     background-color: #dfdfdf;
 }
 
-.right .active {
-    background-color: purple;
-    color: white;
+.left .active {
+    background-color: #dfdfdf;
 }
 
 .grid {
@@ -71,6 +71,21 @@ button {
     color: black;
 }
 
-#weight:hover+#cost {
+
+/* #weight:hover+#cost {
     opacity: 0.5;
+} */
+
+#weight.active+#cost {
+    opacity: 0.5;
+}
+
+#weight.active {
+    background-color: purple;
+    color: white;
+}
+
+#weight:hover {
+    background-color: purple;
+    color: white;
 }

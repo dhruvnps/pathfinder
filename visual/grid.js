@@ -13,6 +13,7 @@ class Grid {
             .selectAll()
             .data(this.graph.graph)
             .enter().append('g')
+            .attr('class', 'row')
             .selectAll()
             .data(d => d)
             .enter().append('rect')
@@ -51,11 +52,12 @@ class Grid {
     colorize(node, color, isPath) {
         if (!node.equals(this.graph.start)
             && !node.equals(this.graph.end)
-            && (node.weight == 1
-                || (isPath && !this.weighted)))
+            && (node.weight == 1 || isPath))
             this.getBlock(node)
-                .style('fill', color)
+                .style('fill', node.weight > 1 && this.weighted
+                    ? '#c00040' : color)
                 .style('opacity', 1)
+
     }
 
     open(node) {
@@ -72,21 +74,18 @@ class Grid {
 
     reset() {
         this.svg
-            .selectAll('g')
+            .selectAll('.row')
             .data(this.graph.graph)
             .selectAll('.block')
             .data(d => d)
 
         this.grid
-            .style('fill', d => d.wall ? 'black'
-                : d.equals(this.graph.start) ? 'blue'
+            .style('fill', d =>
+                d.equals(this.graph.start) ? 'blue'
                     : d.equals(this.graph.end) ? 'green'
-                        : d.weight > 1 ? 'purple'
-                            : '#dfdfdf')
-
-            .style('opacity', d =>
-                d.weight > 1 && !this.weighted
-                    ? 0.4 : 1)
+                        : d.weight > 1 && this.weighted ? 'purple'
+                            : d.weight > 1 ? '#aa0055'
+                                : d.wall ? 'black'
+                                    : '#dfdfdf')
     }
-
 }

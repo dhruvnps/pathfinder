@@ -41,20 +41,17 @@ class Visual {
 
     static run() {
         this.stop()
-        this.graph.reset()
-        this.grid.reset()
         this.path(this.finder.path(this.graph))
         this.runstack()
     }
 
     static draw(node, erase, weight = 1) {
-        this.stop()
         this.graph.insert(erase
             ? new Node(node.x, node.y)
             : weight > 1
                 ? new Node(node.x, node.y, weight)
                 : new Wall(node.x, node.y))
-        this.grid.reset()
+        this.stop()
     }
 
     static path(nodes) {
@@ -80,6 +77,8 @@ class Visual {
     }
 
     static stop() {
+        this.graph.reset()
+        this.grid.reset()
         for (let timeout of this.timeouts) clearTimeout(timeout)
         this.timeouts.length = 0
     }
