@@ -55,7 +55,7 @@ class Grid {
             && (node.weight == 1 || isPath))
             this.getBlock(node)
                 .style('fill', node.weight > 1 && this.weighted
-                    ? '#c00040' : color)
+                    ? '#aa0055' : color)
                 .style('opacity', 1)
 
     }
@@ -84,7 +84,7 @@ class Grid {
                 d.equals(this.graph.start) ? 'blue'
                     : d.equals(this.graph.end) ? 'green'
                         : d.weight > 1 && this.weighted ? 'purple'
-                            : d.weight > 1 ? '#aa0055'
+                            : d.weight > 1 ? '#b78db7'
                                 : d.wall ? 'black'
                                     : '#dfdfdf')
     }
