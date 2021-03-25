@@ -39,7 +39,7 @@ header .right {
 
 button {
     transition: 0.2s;
-    margin: 1.5vh;
+    margin: 1.5vh 10px;
     padding: 0 15px;
     border: none;
     border-radius: 10px;
@@ -71,11 +71,6 @@ button {
     color: black;
 }
 
-
-/* #weight:hover+#cost {
-    opacity: 0.5;
-} */
-
 #weight.active+#cost {
     opacity: 0.5;
 }
@@ -88,4 +83,25 @@ button {
 #weight:hover {
     background-color: purple;
     color: white;
+}
+
+.stats {
+    margin: 10;
+    padding: 10;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    /* padding: 15px; */
+    pointer-events:none;
+}
+
+.stats span {
+    color: blacks;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; 
 }

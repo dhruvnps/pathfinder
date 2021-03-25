@@ -21,7 +21,9 @@ class Visual {
             new Node(width - mid.x - 1, mid.y),
         )
 
+        this.stats = new Stats(container)
         this.grid = new Grid(this.graph, unit, container)
+
         this.find(new AStar(Heuristic.manhattan))
     }
 
@@ -41,7 +43,16 @@ class Visual {
 
     static run() {
         this.stop()
-        this.path(this.finder.path(this.graph))
+
+        var t0 = performance.now()
+        var path = this.finder.path(this.graph)
+        var t1 = performance.now()
+
+        var operations = this.callstack.length,
+            length = path.length
+
+        this.stats.values(t1 - t0, operations, length)
+        this.path(path)
         this.runstack()
     }
 
