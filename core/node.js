@@ -21,7 +21,7 @@ class Node {
     }
 
     reset() {
-        this.closed = this.opened = false
+        this.closed = this.opened = this.path = false
     }
 }
 

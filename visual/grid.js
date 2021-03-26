@@ -49,13 +49,12 @@ class Grid {
         return d3.select(this.grid._groups[node.y][node.x])
     }
 
-    colorize(node, color, isPath) {
+    colorize(node, color) {
         if (!node.equals(this.graph.start)
             && !node.equals(this.graph.end)
-            && (node.weight == 1 || isPath))
+            && (node.weight == 1 || node.path))
             this.getBlock(node)
-                .style('fill', node.weight > 1 ? '#aa0055' : color)
-                .style('opacity', 1)
+                .style('fill', color)
 
     }
 
@@ -68,7 +67,8 @@ class Grid {
     }
 
     path(node) {
-        this.colorize(node, 'red', true)
+        node.path = true
+        this.colorize(node, node.weight > 1 ? '#aa0055' : 'red')
     }
 
     reset() {
