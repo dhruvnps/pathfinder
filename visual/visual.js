@@ -1,8 +1,7 @@
 class Visual {
 
-    static init(container) {
-        var unit = 40
-
+    static init(container, unit, delay) {
+        this.delay = delay
         this.callstack = []
         this.timeouts = []
 
@@ -56,7 +55,7 @@ class Visual {
             this.path(path)
         }
 
-        this.runstack()
+        this.runstack(this.delay)
     }
 
     static draw(node, erase, weight = 1) {
@@ -82,9 +81,9 @@ class Visual {
         this.callstack.push(() => this.grid.close(node))
     }
 
-    static runstack() {
+    static runstack(delay) {
         this.callstack.forEach(function (action, idx) {
-            Visual.timeouts.push(setTimeout(action, 10 * idx))
+            Visual.timeouts.push(setTimeout(action, delay * idx))
         })
         this.callstack.length = 0
     }

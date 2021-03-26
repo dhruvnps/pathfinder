@@ -1,5 +1,8 @@
-var container = d3.select('.grid')
-Visual.init(container)
+var container = d3.select('.grid'),
+    unit = 35,
+    delay = 6
+
+Visual.init(container, unit, delay)
 
 function astar(btn) {
     setActive(btn)
