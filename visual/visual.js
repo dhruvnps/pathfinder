@@ -50,7 +50,8 @@ class Visual {
 
         if (path) {
             var operations = this.callstack.length,
-                length = path.length
+                length = 0
+            for (var node of path) length += node.weight
             this.stats.values(t1 - t0, operations, length)
             this.path(path)
         }
