@@ -59,11 +59,13 @@ class Visual {
     }
 
     static draw(node, erase, weight = 1) {
-        this.graph.insert(erase
-            ? new Node(node.x, node.y)
-            : weight > 1
-                ? new Node(node.x, node.y, weight)
-                : new Wall(node.x, node.y))
+        if (!node.equals(this.graph.start)
+            && !node.equals(this.graph.end))
+            this.graph.insert(erase
+                ? new Node(node.x, node.y)
+                : weight > 1
+                    ? new Node(node.x, node.y, weight)
+                    : new Wall(node.x, node.y))
         this.stop()
     }
 
