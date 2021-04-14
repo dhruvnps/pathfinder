@@ -50,12 +50,13 @@ class Grid {
     }
 
     colorize(node, color) {
-        if (!node.equals(this.graph.start)
+        if (
+            !node.equals(this.graph.start)
             && !node.equals(this.graph.end)
-            && (node.weight == 1 || node.path))
-            this.getBlock(node)
-                .style('fill', color)
-
+            && (node.weight == 1 || node.path)
+        ) this
+            .getBlock(node)
+            .style('fill', color)
     }
 
     open(node) {
@@ -79,12 +80,21 @@ class Grid {
             .data(d => d)
 
         this.grid
-            .style('fill', d =>
-                d.equals(this.graph.start) ? 'blue'
-                    : d.equals(this.graph.end) ? 'green'
-                        : d.weight > 1 && this.weighted ? 'purple'
-                            : d.weight > 1 ? '#b78db7'
-                                : d.wall ? 'black'
-                                    : '#dfdfdf')
+            .style('fill', d => this.color(d))
+    }
+
+    color(node) {
+        if (node.equals(this.graph.start))
+            return 'blue'
+        if (node.equals(this.graph.end))
+            return 'green'
+        if (node.weight > 1 && this.weighted)
+            return 'purple'
+        if (node.weight > 1)
+            return '#b78db7'
+        if (node.wall)
+            return 'black'
+
+        return '#dfdfdf'
     }
 }

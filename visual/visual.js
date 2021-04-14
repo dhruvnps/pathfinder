@@ -59,9 +59,12 @@ class Visual {
     }
 
     static draw(node, erase, weight = 1) {
-        if (!node.equals(this.graph.start)
-            && !node.equals(this.graph.end))
-            this.graph.insert(erase
+        if (
+            !node.equals(this.graph.start)
+            && !node.equals(this.graph.end)
+        ) this
+            .graph
+            .insert(erase
                 ? new Node(node.x, node.y)
                 : weight > 1
                     ? new Node(node.x, node.y, weight)
