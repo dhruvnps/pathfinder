@@ -6,8 +6,8 @@ class Visual {
         this.timeouts = []
 
         var box = container.node().getBoundingClientRect(),
-            height = Math.ceil(box.height / unit),
-            width = Math.ceil(box.width / unit),
+            height = Math.ceil(box.height / unit - 0.2),
+            width = Math.ceil(box.width / unit - 0.2),
             mid = {
                 x: Math.ceil(width / 4) - 1,
                 y: Math.ceil(height / 2) - 1
